@@ -1,4 +1,4 @@
-Function Set-UpperCase {
+Function ConvertTo-UpperCase {
     [CmdletBinding(DefaultParameterSetName = 'Index')]
     Param(
         #String to process.
@@ -119,8 +119,10 @@ Function Join-String {
     Param(
         [Parameter(
             Position = 0
-        )][Alias("Joint")]
-        $Insert,
+        )][Alias(
+            "Joint"
+        )][String]
+        $Insert = '',
 
         [Parameter(
             Mandatory,
@@ -182,7 +184,7 @@ Function Get-Match{
         )][Parameter(
             Mandatory,
             Position = 1,
-            ParameterSetName = 'Path'
+            ParameterSetName = 'Path' 
         )][Alias("Regex")]
         [Alias("Expression")]
         <# Not yet implemented.
