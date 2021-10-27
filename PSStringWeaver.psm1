@@ -267,6 +267,63 @@ Function Get-Match{
         }
     }
 }
+Function ConvertTo-UrlEncoded{
+    [CmdletBinding()]
+    Param(
+        #String to process.
+        [Parameter(
+            Mandatory,
+            Position = 0,
+            ValueFromPipeline
+        )][String[]]
+        $InputObject
+    )
+    Process{
+        $InputObject |
+            Foreach-Object{
+                [System.Web.httpUtility]::UrlEncode($_)
+            }
+    }
+}
+Function ConvertFrom-UrlEncoded{
+    [CmdletBinding()]
+    Param(
+        #String to process.
+        [Parameter(
+            Mandatory,
+            Position = 0,
+            ValueFromPipeline
+        )][String[]]
+        $InputObject
+    )
+    Process{
+        $InputObject |
+            Foreach-Object{
+                [System.Web.httpUtility]::UrlDecode($_)
+            }
+    }
+}
+Function Add-String {
+    [CmdletBinding()]
+    param (
+        [Parameter(
+            Position=0
+        )][String]
+        $Prepend,
+        [Parameter(
+            Position=1
+        )][String]
+        $Append,
+        [Parameter(
+            Position=2,
+            ValueFromPipeLine
+        )][String]
+        $InputObject
+    )
+    Process{
+        "$Prepend$InputObject$Append"
+    }
+}
 $MyInvocation.MyCommand.ScriptBlock.Ast.EndBlock.Statements | 
     Where-Object{$_.Extent.Text -match '^\s*Function'}|
     ForEach-Object {
